@@ -1,0 +1,1 @@
+export { InvalidUuidExceptionFilter } from '../handler/invalidUuidException.utils';
