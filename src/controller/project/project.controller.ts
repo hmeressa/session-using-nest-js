@@ -48,7 +48,7 @@ export class ProjectController {
 
   @Get()
   @UseGuards(RolePermissionsGuard)
-  @Permissions('Team-lead', 'view-user')
+  @Permissions('view-user')
   async getProjects(): Promise<any> {
     const project = await this.projectService.getProjects();
     if (!project) {

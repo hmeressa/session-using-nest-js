@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PermissionDto, PermissionUpdateDto, } from '../../dto';
+import { PermissionDto, PermissionUpdateDto, UserDto, } from '../../dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PermissionModel } from '../../model';
 import { PermissionRepository } from '../../repository';
@@ -16,7 +16,7 @@ export class PermissionService implements PermissionInterface {
         return await this.permissionRepository.save(role);
     }
 
-     async getPermission(id: string) : Promise<Object> {
+     async getPermission(id: string) : Promise<PermissionDto> {
          return await this.permissionRepository.findOne({ where: { id: id } });
     }
     

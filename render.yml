@@ -1,0 +1,4 @@
+services:
+  - name: session-using-nest-js
+    buildCommand: docker build -t session-using-nest-js .
+    startCommand: docker run -p 3000:3000 session-using-nest-js

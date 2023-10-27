@@ -11,15 +11,11 @@ export class RolePermissionsGuard implements CanActivate {
     );
     const request = context.switchToHttp().getRequest();
     if (request?.body) {
-      const permissions = request.body.role.permission;
-      // console.log('permission routes for canActive', roles);
-      // console.log(
-      //   'permission routes for canActive',
-      //   permissions.PermissionModel,
-      // );
-      // if (permissions[roles[0]][roles[1]]) {
-      //   return true;
-      // }
+      console.log('role', roles);
+      const permission = request.body.role.permission;
+      if (permission[roles[0]]) {
+        return true;
+      }
     }
     return false;
   }
