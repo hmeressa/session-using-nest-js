@@ -1,4 +1,12 @@
-export { UserModel } from "./user.model";
+export { BaseModel } from './base.model';
+export { UserModel } from './user.model';
 export { RoleModel } from './role.model';
 export { PermissionModel } from './permission.model';
 export { ProjectModel } from './project.model';
+export { TaskModel } from './task.model';
+export { TaskStatusModel } from './taskStatus.model';
+export { RolePermissionModel } from './rolePermission.model';
+export { UserTaskModel } from './userTask.model';
+export { TodoModel } from './todo.model';
+export { InProgressModel } from './inProgress.model';
+export { DoneModel } from './done.model';

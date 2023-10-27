@@ -1,13 +1,13 @@
+//user.model.ts
 import { hashSync } from 'bcrypt';
-import { Entity, Column, PrimaryColumn, BeforeInsert, OneToMany, ManyToOne } from 'typeorm';
-import * as uuid from 'uuid';
+import { Entity, Column, BeforeInsert, OneToMany, ManyToOne } from 'typeorm';
 import { RoleModel } from './role.model';
+import { BaseModel } from './base.model';
+import { TodoModel } from './todo.model';
+import { TaskModel } from './task.model';
 
-@Entity("users")
-export class UserModel {
-  @PrimaryColumn('uuid')
-  id: string;
-
+@Entity('users')
+export class UserModel extends BaseModel {
   @Column()
   firstName: string;
 
@@ -20,17 +20,21 @@ export class UserModel {
   @Column()
   password: string;
 
+  @Column()
+  roleId: string;
+
   @BeforeInsert()
   hashPassword() {
     if (this.password) {
       this.password = hashSync(this.password, 10);
     }
   }
-  @BeforeInsert()
-  async generateId() : Promise<any> {
-    this.id = await uuid.v4();
-  }
-
-  @ManyToOne(() => RoleModel, role => role.user)
+  @ManyToOne(() => RoleModel, (role) => role.user)
   role: RoleModel;
+
+  @OneToMany(() => TodoModel, (todo) => todo.inProgress)
+  todo: TodoModel;
+
+  @OneToMany(() => TaskModel, (task) => task.user)
+  task: TaskModel;
 }

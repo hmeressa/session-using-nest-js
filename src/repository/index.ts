@@ -1,4 +1,10 @@
-export { UserRepository } from './user.repository'
+export { UserRepository } from './user.repository';
 export { RoleRepository } from './role.repository';
 export { PermissionRepository } from './permission.repository';
 export { PorjectRepository } from './project.repository'
+export { TaskRepository } from './task.repository';
+export { TaskStatusRepository } from './taskStatus.repository';
+export { RolePermissionRepository } from './rolePermission.repository';
+export { TodoRepository } from './todo.repository';
+export { InProgressModelRepository } from './inProgress.repository';
+export { DoneRepository } from './done.repository';

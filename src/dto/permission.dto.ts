@@ -1,8 +1,9 @@
 // permission.dto.ts
-import { IsNotEmpty, IsEmail, IsString, MinLength, MaxLength } from 'class-validator';
+import { IsNotEmpty, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { BaseModel } from '../model';
 
-export class PermissionDto {
+export class PermissionDto extends BaseModel {
   @ApiProperty()
   @IsNotEmpty({ message: 'Please enter permission name' })
   @IsString()

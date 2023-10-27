@@ -1,5 +1,5 @@
-// user.dto.ts
-import { IsNotEmpty, IsEmail, IsString, MinLength, MaxLength } from 'class-validator';
+// userUpdateDto.dto.ts
+import { IsNotEmpty, IsString } from 'class-validator';
 
 export class UserUpdateDto {
   @IsNotEmpty({ message: 'Please enter your first name' })

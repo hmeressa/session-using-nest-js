@@ -6,7 +6,7 @@ import { PermissionService } from '../../service';
 
 @Controller('permission')
 export class PermissionController {
-    constructor(@InjectRepository(PermissionModel)
+    constructor(
     private readonly permissionService: PermissionService) { }
 
     @Post()
@@ -45,7 +45,7 @@ export class PermissionController {
         return permission;
     }
 
-    @Delete("id")
+    @Delete(":id")
     async deletePermission(@Param('id') id: string): Promise<any>{
         const permission = await this.getPermission(id);
         if (!permission) {

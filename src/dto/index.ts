@@ -5,5 +5,13 @@ export { PermissionUpdateDto } from './permissionUpdate.dto';
 export { RoleDto } from './role.dto';
 export { RoleUpdateDto } from './roleUpdateDto.dto';
 export { ProjectDto } from './project.dto';
-export { ProjectUpdateDto } from './projectUpdate.dto'
-
+export { ProjectUpdateDto } from './projectUpdate.dto';
+export { TaskDto } from './task.dto';
+export { TaskUpdateDto } from './taskUpdate.dto';
+export { TaskStatusDto } from './taskStatus.dto';
+export { RolePermissionDto } from './rolePermission.dto';
+export { UserTaskDto } from './userTask.dto';
+export { TodoDto } from './todo.dto';
+export { InProgressDto } from './inProgress.dto';
+export { DoneDto } from './done.dto';
+export { ProjectStatus } from './projectStatus.dto';

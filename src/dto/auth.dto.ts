@@ -1,4 +1,4 @@
-// user.dto.ts
+// auth.dto.ts
 import { IsNotEmpty, IsEmail, IsString, MinLength, MaxLength } from 'class-validator';
 
 export class AuthDto {

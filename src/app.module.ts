@@ -4,46 +4,38 @@ import { AllModules } from './allModules';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { APP_FILTER } from '@nestjs/core';
 import { InvalidUuidExceptionFilter } from './handler';
-import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
-import { verifyToken } from './middleware/auth.middleware';
-import { RoleService } from './service/role/role.service';
-import { RoleModule } from './module';
-import { RoleModel } from './model';
-import { RolePermissionService } from './service/role-permission/role-permission.service';
-import { RolePermissionController } from './controller/role-permission/role-permission.controller';
-import { ProjectService } from './service/project/project.service';
-import { ProjectController } from './controller/project/project.controller';
-import { ProjectModuleModule } from './module/project/project.module';
-
-
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { UserAuthorization } from './middleware';
+import { UserService } from './service';
+import { UserModel } from './model';
 @Module({
-  imports: [ TypeOrmModule.forRoot({
-          type: 'postgres',
-          host: 'localhost',
-          port: 5432,
-          username: 'postgres',
-          password: "12345678",
-          database: 'nest-js-learning-session',
-          entities: [__dirname + '/**/*.model{.ts,.js}'],
-          synchronize: true,
-     }), AllModules, ProjectModuleModule ],
-  controllers: [AppController, RolePermissionController, ProjectController ],
+  imports: [
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: 'localhost',
+      port: 5432,
+      username: 'postgres',
+      password: '12345678',
+      database: 'nest-js-learning-session',
+      entities: [__dirname + '/**/*.model{.ts,.js}'],
+      synchronize: true,
+    }),
+    TypeOrmModule.forFeature([UserModel]),
+    AllModules,
+  ],
+  controllers: [AppController],
   providers: [
     AppService,
-  {
-    provide: APP_FILTER,
-    useClass: InvalidUuidExceptionFilter,
-  },
-  RolePermissionService,
-  ProjectService,  
-],
-  
+    UserService,
+    {
+      provide: APP_FILTER,
+      useClass: InvalidUuidExceptionFilter,
+    },
+  ],
 })
+// export class AppModule {}
 export class AppModule implements NestModule {
-   configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(verifyToken)
-      .forRoutes('users');
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(UserAuthorization).exclude('auth').forRoutes('*');
   }
 }
- 

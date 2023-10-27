@@ -11,24 +11,24 @@ export class PermissionService implements PermissionInterface {
         @InjectRepository(PermissionModel)
         private readonly permissionRepository: PermissionRepository) { }
     
-    async createPermission(permissionDto : PermissionDto) : Promise<any> {
+    async createPermission(permissionDto : PermissionDto) : Promise<Object> {
         const role = await this.permissionRepository.create(permissionDto);
         return await this.permissionRepository.save(role);
     }
 
-     async getPermission(id: any) : Promise<any> {
+     async getPermission(id: string) : Promise<Object> {
          return await this.permissionRepository.findOne({ where: { id: id } });
     }
     
-    async getPermissions() : Promise<any> {
+    async getPermissions() : Promise<Object> {
          return await this.permissionRepository.find(); 
     }
     
     async getPermissionByName(permission: string): Promise<any>{
-        return this.permissionRepository.findOne({ where: { name: permission } });
+        return await this.permissionRepository.findOne({ where: { name: permission } });
     }
 
-    async deletePermission(id: any) : Promise<any> {
+    async deletePermission(id: string) : Promise<any> {
          return await this.permissionRepository.delete(id);
     }
     

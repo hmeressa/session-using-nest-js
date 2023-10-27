@@ -5,9 +5,9 @@ import { UserRepository } from 'src/repository';
 
 @Injectable()
 export class AuthService {
-    constructor(@InjectRepository(UserModel)
-    private readonly userRepository: UserRepository) { }
-    async authUser() {
-        
-    }
+  constructor(
+    @InjectRepository(UserModel)
+    private readonly userRepository: UserRepository,
+  ) {}
+  async authUser() {}
 }

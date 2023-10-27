@@ -6,10 +6,11 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  try{
-    app.use(cookieParser())
+  try {
+    app.use(cookieParser());
     app.useGlobalPipes(new ValidationPipe());
-    app.setGlobalPrefix("api")
+    app.setGlobalPrefix('api');
+    app.enableCors();
     const config = new DocumentBuilder()
       .setTitle('Your API')
       .setDescription('API description')
@@ -17,9 +18,8 @@ async function bootstrap() {
       .build();
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('api', app, document);
-  await app.listen(3000);
-}
-  catch (error) {
+    await app.listen(3000);
+  } catch (error) {
     Logger.error(`Failed to start the application: ${error}`, '', 'Bootstrap');
   }
 }

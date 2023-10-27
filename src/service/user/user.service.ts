@@ -19,15 +19,15 @@ export class UserService implements UserInterface {
   }
 
   async getUser(id: string): Promise<Object> {
-     return await this.userRepository.findOne({where : {id : id}})
+     return await this.userRepository.findOne({where : {id: id },relations : ['role','role.permission']})
   }
 
   async getUsers(): Promise<Object> {
-    return await this.userRepository.find();
+    return await this.userRepository.find({relations:  ['role','role.permission']});
   }
   
   async getUserByEmail(email : any): Promise<any> {
-     return this.userRepository.findOne({ where: { email: email } });
+     return this.userRepository.findOne({ where: { email: email },relations: ['role.permission'] });
   } 
   
   async deleteUser(id: string): Promise<Object> {

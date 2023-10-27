@@ -6,6 +6,7 @@ import { Controller, Post,Get, Delete,Patch, Body, Param, NotFoundException } fr
 @Controller('role')
 export class RoleController {
     constructor(private readonly roleService: RoleService) { }
+    
     @Post()
     async createRole(@Body() roleDto: RoleDto): Promise<any>{
         const isExist = await this.roleService.getRoleByName(roleDto.name);

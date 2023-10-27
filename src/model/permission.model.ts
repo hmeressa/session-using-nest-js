@@ -1,23 +1,27 @@
-import { Entity, Column, PrimaryColumn, BeforeInsert, ManyToMany } from 'typeorm';
-import * as uuid from 'uuid';
+//permission.model.ts
+import { Entity, Column, ManyToMany, JoinTable } from 'typeorm';
 import { RoleModel } from './role.model';
+import { BaseModel } from './base.model';
 
-@Entity("permssions")
-export class PermissionModel {
-  @PrimaryColumn('uuid')
-  id: string;
-
+@Entity('permissions')
+export class PermissionModel extends BaseModel {
   @Column()
   name: string;
-    
+
   @Column()
   slug: string;
 
-  @BeforeInsert()
-  async generateId() : Promise<any> {
-    this.id = await uuid.v4();
-    }
-    
-  @ManyToMany(() => RoleModel, role => role.permissions)
-  roles: RoleModel[];
+  @ManyToMany(() => RoleModel, (role) => role.permission)
+  @JoinTable({
+    name: 'rolePermssions', // name of the pivot table
+    joinColumn: {
+      name: 'permissionId',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'roleId',
+      referencedColumnName: 'id',
+    },
+  })
+  public role: RoleModel[];
 }

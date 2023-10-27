@@ -6,4 +6,5 @@ export interface PermissionInterface{
     getPermissions(): Promise<Object>;
     deletePermission(id : string): Promise<Object>;
     updatePermission(id: string, permissionUpdateDto: PermissionUpdateDto): Promise<Object>;
+    getPermissionByName(permission: string): Promise<any>
 }

@@ -1,22 +1,22 @@
 // project.model.ts
 
-import { BeforeInsert, Column, PrimaryColumn } from 'typeorm';
-import * as uuid from 'uuid';
-export class ProjectModel {
-  @PrimaryColumn("uuid")
-  id : string
-    
+import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
+import { TaskModel } from './task.model';
+import { BaseModel } from './base.model';
+@Entity('projects')
+export class ProjectModel extends BaseModel {
   @Column()
   name: string;
-    
-  @Column()
+
+  @Column({ type: 'date' })
   startDate: Date;
-    
-  @Column()
+
+  @Column({ type: 'date' })
   endDate: Date;
 
-  @BeforeInsert()
-  async generateUUId(): Promise<any>{
-      return await uuid.v4();
-    }
+  @Column({ nullable: true })
+  status: string;
+
+  @OneToMany(() => TaskModel, (task) => task.project)
+  task: TaskModel;
 }

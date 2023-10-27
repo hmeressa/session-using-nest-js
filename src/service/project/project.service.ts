@@ -7,27 +7,44 @@ import { ProjectModel } from '../../model';
 
 @Injectable()
 export class ProjectService implements ProjectInterface {
-    constructor(@InjectRepository(ProjectModel)
-    private readonly porjectRepository: PorjectRepository) { }
-    
-    createProject(projectDto: ProjectDto): Promise<any> {
-        const project = this.porjectRepository.create(projectDto);
-        return this.porjectRepository.save(project);
-    }
+  constructor(
+    @InjectRepository(ProjectModel)
+    private readonly porjectRepository: PorjectRepository,
+  ) {}
 
-    getProject(id: string): Promise<any> {
-        return this.porjectRepository.findOne({ where: { id: id } });
+  async createProject(projectDto: ProjectDto): Promise<any> {
+    try {
+      const project = this.porjectRepository.create(projectDto);
+      return await this.porjectRepository.save(project);
+    } catch (error) {
+      console.log('error', error);
+      throw error;
     }
+  }
 
-    getProjects(): Promise<any> {
-        return this.porjectRepository.find();
-    }
+  async getProject(id: string): Promise<any> {
+    return await this.porjectRepository.findOne({
+      where: { id: id },
+      relations: ['task'],
+    });
+  }
 
-    deleteProject(id: string): Promise<any> {
-        return this.porjectRepository.delete(id);
-    }
+  async getProjects(): Promise<any> {
+    return await this.porjectRepository.find({ relations: ['task'] });
+  }
 
-    updateProject(id: string, projectUpdateDto: ProjectUpdateDto): Promise<any> {
-        return this.porjectRepository.update(id, projectUpdateDto);
-    }
+  async getProjectByName(project: string): Promise<any> {
+    return await this.porjectRepository.findOne({ where: { name: project } });
+  }
+
+  async deleteProject(id: string): Promise<any> {
+    return await this.porjectRepository.delete(id);
+  }
+
+  async updateProject(
+    id: string,
+    projectUpdateDto: ProjectUpdateDto,
+  ): Promise<any> {
+    return await this.porjectRepository.update(id, projectUpdateDto);
+  }
 }

@@ -5,8 +5,8 @@ import { ProjectController } from '../../controller';
 import { ProjectService } from '../../service';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([ ProjectModel ])],
-    controllers: [ ProjectController ],
-    providers :[ ProjectService ]
+  imports: [TypeOrmModule.forFeature([ProjectModel])],
+  controllers: [ProjectController],
+  providers: [ProjectService],
 })
 export class ProjectModule {}
