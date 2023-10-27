@@ -12,11 +12,11 @@ import { UserModel } from './model';
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: '12345678',
-      database: 'nest-js-learning-session',
+      // host: 'localhost',
+      host: process.env.host,
+      username: process.env.username,
+      password: process.env.password,
+      database: process.env.database,
       entities: [__dirname + '/**/*.model{.ts,.js}'],
       synchronize: true,
     }),
