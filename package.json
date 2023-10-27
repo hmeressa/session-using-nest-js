@@ -10,7 +10,7 @@
     "create-service": "nest generate service service/",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "nodemon --exec ts-node -r tsconfig-paths/register src/main.ts",
+    "start": "nodemon src/main.ts",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
