@@ -12,7 +12,6 @@ import { UserModel } from './model';
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      // host: 'localhost',
       host: process.env.host,
       username: process.env.username,
       password: process.env.password,
@@ -33,9 +32,9 @@ import { UserModel } from './model';
     },
   ],
 })
-// export class AppModule {}
-export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer.apply(UserAuthorization).exclude('auth').forRoutes('*');
-  }
-}
+export class AppModule {}
+// export class AppModule implements NestModule {
+//   configure(consumer: MiddlewareConsumer) {
+//     consumer.apply(UserAuthorization).exclude('auth').forRoutes('*');
+//   }
+// }
