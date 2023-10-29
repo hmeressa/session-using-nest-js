@@ -10,6 +10,15 @@ import { UserService } from './service';
 import { UserModel } from './model';
 @Module({
   imports: [
+    // TypeOrmModule.forRoot({
+    //   type: 'postgres',
+    //   host: 'localhost',
+    //   username: 'postgres',
+    //   password: '12345678',
+    //   database: 'nest-js-learning-session',
+    //   entities: [__dirname + '/**/*.model{.ts,.js}'],
+    //   synchronize: true,
+    // }),
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.host,

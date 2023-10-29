@@ -42,4 +42,26 @@ export class InProgressController {
       data: inProgress,
     };
   }
+  @Get(':id')
+  async getInProgress(id: string): Promise<any> {
+    const inProgress = await this.inProgressService.getInProgress(id);
+    if (!inProgress) {
+      return new NotFoundException({
+        message: 'Something bad happened',
+        error: 'InProgress Not Found',
+      });
+    }
+    return inProgress;
+  }
+  @Get()
+  async getInProgresses(id: string): Promise<any> {
+    const inProgresses = await this.inProgressService.getInProgresses();
+    if (!inProgresses) {
+      return new NotFoundException({
+        message: 'Something bad happened',
+        error: 'InProgress Not Found',
+      });
+    }
+    return inProgresses;
+  }
 }

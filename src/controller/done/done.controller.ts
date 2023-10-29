@@ -20,8 +20,6 @@ export class DoneController {
 
   @Post(':id')
   async transferInProgressTaskToDoneTasks(
-    @Req() req: Request,
-    @Res() res: Response,
     @Param('id') id: string,
   ): Promise<any> {
     const inProgress = await this.inProgressService.getInProgress(id);
