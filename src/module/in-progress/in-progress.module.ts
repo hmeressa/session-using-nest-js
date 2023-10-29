@@ -14,7 +14,7 @@ import {
   TodoService,
 } from '../../service';
 import {
-  InProgressModelRepository,
+  InProgressRepository,
   TaskStatusRepository,
   TodoRepository,
 } from '../../repository';
@@ -31,7 +31,7 @@ import {
   controllers: [InProgressController],
   providers: [
     InProgressService,
-    InProgressModelRepository,
+    InProgressRepository,
     TodoService,
     TodoRepository,
     TaskService,
