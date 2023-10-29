@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InProgressInterface } from '../../interface';
 import { InProgressModel, TaskModel } from '../../model';
-import { InProgressModelRepository, TaskRepository } from '../../repository';
+import { InProgressRepository, TaskRepository } from '../../repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TodoService } from '../todo/todo.service';
 import { TaskStatusService } from '../task-status/task-status.service';
@@ -10,7 +10,7 @@ import { TaskStatusService } from '../task-status/task-status.service';
 export class InProgressService implements InProgressInterface {
   constructor(
     @InjectRepository(InProgressModel)
-    private readonly inProgressModelRepository: InProgressModelRepository,
+    private readonly inProgressModelRepository: InProgressRepository,
     @InjectRepository(TaskModel)
     private readonly taskRepository: TaskRepository,
     private readonly todoService: TodoService,
@@ -31,6 +31,7 @@ export class InProgressService implements InProgressInterface {
       await this.taskRepository.update(taskId, {
         taskStatusId: taskStatus.id,
       });
+      await this.todoService.deleteTodo(todo.id);
       return await this.inProgressModelRepository.save(inProgress);
     } catch (error) {
       throw error;
@@ -41,5 +42,9 @@ export class InProgressService implements InProgressInterface {
     return await this.inProgressModelRepository.findOne({
       where: { id: inProgressId },
     });
+  }
+
+  async deleteInProgress(id: string): Promise<any> {
+    return await this.inProgressModelRepository.delete(id);
   }
 }

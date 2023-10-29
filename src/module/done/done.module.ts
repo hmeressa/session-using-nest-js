@@ -15,7 +15,7 @@ import {
   TaskStatusService,
   TodoService,
 } from '../../service';
-import { DoneRepository } from '../../repository';
+import { DoneRepository, InProgressRepository } from '../../repository';
 
 @Module({
   imports: [
@@ -25,6 +25,7 @@ import { DoneRepository } from '../../repository';
       TaskModel,
       InProgressModel,
       TodoModel,
+      InProgressModel,
     ]),
   ],
   controllers: [DoneController],
@@ -35,6 +36,8 @@ import { DoneRepository } from '../../repository';
     TaskService,
     InProgressService,
     TodoService,
+    InProgressService,
+    InProgressRepository,
   ],
 })
 export class DoneModule {}

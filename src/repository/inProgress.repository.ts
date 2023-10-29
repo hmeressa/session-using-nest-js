@@ -1,6 +1,5 @@
-import { EntityRepository, Repository } from "typeorm";
-import { InProgressModel } from "../model";
+import { EntityRepository, Repository } from 'typeorm';
+import { InProgressModel } from '../model';
 
 @EntityRepository(InProgressModel)
-export class InProgressModelRepository extends Repository<InProgressModel> {
-}
+export class InProgressRepository extends Repository<InProgressModel> {}

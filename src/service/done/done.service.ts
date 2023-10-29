@@ -5,6 +5,7 @@ import { DoneModel, TaskModel } from '../../model';
 import { DoneRepository, TaskRepository } from '../../repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TaskStatusService } from '../task-status/task-status.service';
+import { InProgressService } from '../in-progress/in-progress.service';
 
 @Injectable()
 export class DoneService implements DoneInterface {
@@ -14,10 +15,12 @@ export class DoneService implements DoneInterface {
     private readonly taskStatusService: TaskStatusService,
     @InjectRepository(TaskModel)
     private readonly taskRepository: TaskRepository,
+    private readonly inProgressService: InProgressService,
   ) {}
+
   async createDone(inProgress: any, taskId: any): Promise<any> {
     const taskStatus = await this.taskStatusService.getStatus('done');
-    const todo = await this.doneRepository.create({
+    const done = await this.doneRepository.create({
       name: inProgress.name,
       startDate: inProgress.startDate,
       endDate: inProgress.endDate,
@@ -27,8 +30,8 @@ export class DoneService implements DoneInterface {
     await this.taskRepository.update(taskId, {
       taskStatusId: taskStatus.id,
     });
-
-    return await this.doneRepository.save(todo);
+    await this.inProgressService.deleteInProgress(inProgress.id);
+    return await this.doneRepository.save(done);
   }
   getDone(inProgressId: string): Promise<any> {
     throw new Error('Method not implemented.');

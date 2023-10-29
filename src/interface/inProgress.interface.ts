@@ -4,4 +4,5 @@ import { InProgressDto } from '../dto';
 export interface InProgressInterface {
   createInProgress(todoId: any, inProgressId: any): Promise<any>;
   getInProgress(inProgressId: string): Promise<any>;
+  deleteInProgress(id: string): Promise<any>;
 }

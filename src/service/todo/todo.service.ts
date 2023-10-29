@@ -39,4 +39,8 @@ export class TodoService implements TodoInterface {
   async getTodos(): Promise<any> {
     return this.todoRepository.find();
   }
+
+  async deleteTodo(id: string): Promise<any> {
+    return await this.todoRepository.delete(id);
+  }
 }
