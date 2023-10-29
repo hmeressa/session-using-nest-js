@@ -33,7 +33,7 @@ export class TodoService implements TodoInterface {
     return await this.todoRepository.save(todo);
   }
   async getTodo(id: string): Promise<any> {
-    return this.todoRepository.findOne({
+    return await this.todoRepository.findOne({
       where: { id: id },
     });
   }

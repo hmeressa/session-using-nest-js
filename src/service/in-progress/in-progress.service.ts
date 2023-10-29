@@ -19,7 +19,6 @@ export class InProgressService implements InProgressInterface {
 
   async createInProgress(todo: any, taskId: any): Promise<any> {
     try {
-      console.log('console', todo);
       const taskStatus = await this.taskStatusService.getStatus('in-progress');
       const inProgress = await this.inProgressModelRepository.create({
         name: todo.name,
@@ -31,8 +30,10 @@ export class InProgressService implements InProgressInterface {
       await this.taskRepository.update(taskId, {
         taskStatusId: taskStatus.id,
       });
+      const inP = await this.inProgressModelRepository.save(inProgress);
+      console.log('log', todo.id);
       await this.todoService.deleteTodo(todo.id);
-      return await this.inProgressModelRepository.save(inProgress);
+      return inP;
     } catch (error) {
       throw error;
     }

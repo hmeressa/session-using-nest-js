@@ -30,7 +30,7 @@ export class DoneService implements DoneInterface {
     await this.taskRepository.update(taskId, {
       taskStatusId: taskStatus.id,
     });
-    await this.inProgressService.deleteInProgress(inProgress.id);
+    // await this.inProgressService.deleteInProgress(inProgress.id);
     return await this.doneRepository.save(done);
   }
   async getDone(doneId: any): Promise<any> {

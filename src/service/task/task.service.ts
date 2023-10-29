@@ -25,7 +25,9 @@ export class TaskService implements TaskInterface {
   }
 
   async getTasks(): Promise<any> {
-    return await this.taskRepository.find();
+    return await this.taskRepository.find({
+      relations: ['user', 'project', 'taskStatus'],
+    });
   }
 
   async getTaskByName(name: string): Promise<any> {
