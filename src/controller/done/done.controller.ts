@@ -33,14 +33,6 @@ export class DoneController {
       });
     }
     const done = await this.doneService.createDone(inProgress, todo.taskId);
-    await 
-    // await sendEmailNotification(
-    //   req.body?.email,
-    //   'hmkahsay@gmail.com',
-    //   'hmkahsay@gmail.com',
-    //   'Task is completed',
-    //   'Task Notification',
-    // );
 
     if (!done) {
       return new NotFoundException({
@@ -52,5 +44,29 @@ export class DoneController {
       status: 'Success',
       data: done,
     };
+  }
+
+  @Get(':id')
+  async getDone(id: string): Promise<any> {
+    const done = await this.doneService.getDone(id);
+    if (!done) {
+      return new NotFoundException({
+        message: 'Something bad happened',
+        error: 'Done Not Found',
+      });
+    }
+    return done;
+  }
+
+  @Get()
+  async getDones(): Promise<any> {
+    const dones = await this.doneService.getDones();
+    if (!dones) {
+      return new NotFoundException({
+        message: 'Something bad happened',
+        error: 'Done Not Found',
+      });
+    }
+    return dones;
   }
 }

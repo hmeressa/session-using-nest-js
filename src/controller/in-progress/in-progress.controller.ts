@@ -42,9 +42,4 @@ export class InProgressController {
       data: inProgress,
     };
   }
-
-  @Get()
-  async getTodos(): Promise<any> {
-    // return this.todoService.getTodo();
-  }
 }

@@ -44,6 +44,10 @@ export class InProgressService implements InProgressInterface {
     });
   }
 
+  async getInProgresses(): Promise<any> {
+    return await this.inProgressModelRepository.find();
+  }
+
   async deleteInProgress(id: string): Promise<any> {
     return await this.inProgressModelRepository.delete(id);
   }

@@ -33,10 +33,10 @@ export class DoneService implements DoneInterface {
     await this.inProgressService.deleteInProgress(inProgress.id);
     return await this.doneRepository.save(done);
   }
-  getDone(inProgressId: string): Promise<any> {
-    throw new Error('Method not implemented.');
+  async getDone(doneId: any): Promise<any> {
+    return await this.doneRepository.findOne(doneId);
   }
-  getDones(): Promise<any> {
-    throw new Error('Method not implemented.');
+  async getDones(): Promise<any> {
+    return await this.doneRepository.find();
   }
 }
