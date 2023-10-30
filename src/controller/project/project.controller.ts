@@ -57,13 +57,14 @@ export class ProjectController {
         error: 'Project NOT FOUND',
       });
     }
-    const open = project.filter((open) => open.status === 'open').length;
+    const open = project.filter((open: any) => open.status === 'open').length;
     const closed = project.filter(
-      (closed) => closed.status === 'closed',
+      (closed: any) => closed.status === 'closed',
     ).length;
     const inProgress = project.filter(
-      (inProgress) => inProgress.status === 'inProgress',
+      (inProgress: any) => inProgress.status === 'inProgress',
     ).length;
+    // project.user = project?.task?.user;
 
     return {
       project: project,

@@ -25,12 +25,14 @@ export class ProjectService implements ProjectInterface {
   async getProject(id: string): Promise<any> {
     return await this.porjectRepository.findOne({
       where: { id: id },
-      relations: ['task'],
+      relations: ['task.user', 'task.taskStatus'],
     });
   }
 
   async getProjects(): Promise<any> {
-    return await this.porjectRepository.find({ relations: ['task'] });
+    return await this.porjectRepository.find({
+      relations: ['task.user', 'task.taskStatus'],
+    });
   }
 
   async getProjectByName(project: string): Promise<any> {
