@@ -26,7 +26,7 @@ export class UserService implements UserInterface {
     });
   }
 
-  async getUsers(): Promise<Object> {
+  async getUsers(): Promise<any> {
     return await this.userRepository.find({
       relations: ['role', 'role.permission'],
     });

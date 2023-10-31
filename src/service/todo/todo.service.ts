@@ -45,4 +45,7 @@ export class TodoService implements TodoInterface {
   async deleteTodo(id: string): Promise<any> {
     return await this.todoRepository.delete(id);
   }
+  async unAssignedTask(taskId: string): Promise<any> {
+    return await this.todoRepository.delete({ taskId: taskId });
+  }
 }

@@ -27,7 +27,6 @@ export class UserAuthorization implements NestMiddleware {
       }
 
       const user = await this.userService.getUser(verify.userId);
-      console.log(user);
       if (!user) {
         return next(
           new UnauthorizedException({

@@ -8,9 +8,10 @@ import {
   NotFoundException,
   Param,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { ProjectService } from '../../service';
-import { ProjectDto, ProjectUpdateDto } from '../../dto';
+import { PaginationQueryDto, ProjectDto, ProjectUpdateDto } from '../../dto';
 import { RolePermissionsGuard, Permissions } from '../../middleware';
 @Controller('project')
 export class ProjectController {
@@ -47,8 +48,8 @@ export class ProjectController {
   }
 
   @Get()
-  // @UseGuards(RolePermissionsGuard)
-  // @Permissions('view-user')
+  @UseGuards(RolePermissionsGuard)
+  @Permissions('view-user')
   async getProjects(): Promise<any> {
     const project = await this.projectService.getProjects();
     if (!project) {
@@ -65,6 +66,35 @@ export class ProjectController {
       (inProgress: any) => inProgress.status === 'inProgress',
     ).length;
     // project.user = project?.task?.user;
+
+    return {
+      project: project,
+      open: open,
+      closed: closed,
+      inProgress: inProgress,
+    };
+  }
+
+  @Get('/pagination/getAll')
+  async getProjectsByPagination(
+    @Query() paginationDto: PaginationQueryDto,
+  ): Promise<any> {
+    console.log(paginationDto); // Log the actual paginationDto object
+    const project =
+      await this.projectService.getProjectsByPagination(paginationDto);
+    if (!project) {
+      return new NotFoundException({
+        message: 'Something bad happened',
+        error: 'Project NOT FOUND',
+      });
+    }
+    const open = project.filter((open: any) => open.status === 'open').length;
+    const closed = project.filter(
+      (closed: any) => closed.status === 'closed',
+    ).length;
+    const inProgress = project.filter(
+      (inProgress: any) => inProgress.status === 'inProgress',
+    ).length;
 
     return {
       project: project,

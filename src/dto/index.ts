@@ -15,3 +15,4 @@ export { TodoDto } from './todo.dto';
 export { InProgressDto } from './inProgress.dto';
 export { DoneDto } from './done.dto';
 export { ProjectStatus } from './projectStatus.dto';
+export { PaginationQueryDto } from './paginationQuery.dto';

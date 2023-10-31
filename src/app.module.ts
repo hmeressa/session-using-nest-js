@@ -2,9 +2,14 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AllModules } from './allModules';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { APP_FILTER } from '@nestjs/core';
+import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { InvalidUuidExceptionFilter } from './handler';
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from '@nestjs/common';
 import { UserAuthorization } from './middleware';
 import { UserService } from './service';
 import { UserModel } from './model';
@@ -41,9 +46,24 @@ import { UserModel } from './model';
     },
   ],
 })
-export class AppModule {}
-// export class AppModule implements NestModule {
-//   configure(consumer: MiddlewareConsumer) {
-//     consumer.apply(UserAuthorization).exclude('auth').forRoutes('*');
-//   }
-// }
+// export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(UserAuthorization)
+      .exclude('auth', 'project', {
+        path: 'user',
+        method: RequestMethod.POST,
+      })
+      .forRoutes
+      // 'user',
+      // 'role',
+      // 'permission',
+      // // 'role-permission',
+      // 'done',
+      // 'to-do',
+      // // 'task',
+      // 'in-progress',
+      ();
+  }
+}

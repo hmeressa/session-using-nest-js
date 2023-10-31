@@ -7,8 +7,14 @@ import {
   Req,
   Res,
 } from '@nestjs/common';
-import { DoneService, InProgressService, TodoService } from '../../service';
+import {
+  DoneService,
+  InProgressService,
+  TodoService,
+  UserService,
+} from '../../service';
 import { sendEmailNotification } from 'src/utils/sendEmailNotification';
+// import { sendEmailNotification } from 'src/utils/sendEmailNotification';
 
 @Controller('done')
 export class DoneController {
@@ -16,12 +22,16 @@ export class DoneController {
     private readonly doneService: DoneService,
     private readonly TodoService: TodoService,
     private readonly inProgressService: InProgressService,
+    private readonly UserService: UserService,
   ) {}
 
   @Post(':id')
   async transferInProgressTaskToDoneTasks(
     @Param('id') id: string,
+    @Req() request: Request,
   ): Promise<any> {
+    const users = await this.UserService.getUsers();
+    const admins = users.filter((admin: any) => admin.role.name === 'Admin');
     const inProgress = await this.inProgressService.getInProgress(id);
     const todo = await this.TodoService.getTodo(inProgress.todoId);
     if (!inProgress) {
@@ -38,6 +48,14 @@ export class DoneController {
         error: 'Unable to transfer to inprogress',
       });
     }
+
+    await sendEmailNotification(
+      (request.body as any).id,
+      (users as any).email.email,
+      'Task Notification',
+      'You are assigned a task',
+      '',
+    );
     return {
       status: 'Success',
       data: done,

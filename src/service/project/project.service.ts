@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { ProjectDto, ProjectUpdateDto } from 'src/dto';
+import { PaginationQueryDto, ProjectDto, ProjectUpdateDto } from 'src/dto';
 import { ProjectInterface } from '../../interface';
 import { PorjectRepository } from '../../repository';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -11,6 +11,22 @@ export class ProjectService implements ProjectInterface {
     @InjectRepository(ProjectModel)
     private readonly porjectRepository: PorjectRepository,
   ) {}
+  async getProjectsByPagination(
+    paginationDto: PaginationQueryDto,
+  ): Promise<any> {
+    const { limit, page } = paginationDto;
+    const skip = (page - 1) * limit;
+    const queryBuilder = await this.porjectRepository
+      .createQueryBuilder('project')
+      .leftJoinAndSelect('project.task', 'task')
+      .leftJoinAndSelect('task.user', 'user')
+      .leftJoinAndSelect('task.taskStatus', 'taskStatus')
+      .skip(skip)
+      .take(limit);
+
+    const projects = await queryBuilder.getMany();
+    return projects;
+  }
 
   async createProject(projectDto: ProjectDto): Promise<any> {
     try {

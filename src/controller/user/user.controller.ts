@@ -6,11 +6,18 @@ import {
   Patch,
   Body,
   Param,
+  UseGuards,
 } from '@nestjs/common';
 import { RoleService, UserService } from '../../service';
 import { UserDto, UserUpdateDto } from '../../dto';
 import { NotFoundException, BadRequestException } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import {
+  ExcludeAuthorizationGuard,
+  Permissions,
+  RolePermissionsGuard,
+  UserAuthorization,
+} from 'src/middleware';
 
 @ApiTags('user')
 @Controller('user')
@@ -21,6 +28,7 @@ export class UserController {
   ) {}
 
   @Post()
+  // @UseGuards(new ExcludeAuthorizationGuard())
   async createUser(@Body() userDto: UserDto): Promise<Object> {
     const { email } = userDto;
     const user = await this.userService.getUserByEmail(email);
@@ -30,15 +38,6 @@ export class UserController {
         description: 'User email is exist',
       });
     }
-
-    // const role = await this.roleService.getRole(userDto.role);
-    // if (!role) {
-    //      return new NotFoundException('Something bad happened',
-    //         {
-    //             cause: new Error(),
-    //             description: 'Role Not Found',
-    //         })
-    // }
     return await this.userService.createUser(userDto);
   }
 
@@ -55,6 +54,8 @@ export class UserController {
   }
 
   @Get()
+  @UseGuards(RolePermissionsGuard)
+  @Permissions('view-users')
   async getUsers(): Promise<Object> {
     return this.userService.getUsers();
   }

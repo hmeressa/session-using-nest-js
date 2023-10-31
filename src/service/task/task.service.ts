@@ -45,4 +45,8 @@ export class TaskService implements TaskInterface {
   async assignTaskToUser(id: string, taskDto: TaskUpdateDto): Promise<any> {
     return await this.taskRepository.update(id, taskDto);
   }
+
+  async reAssignTaskToUser(taskId: any, userId: any): Promise<any> {
+    return await this.taskRepository.update(taskId, { userId: userId.id });
+  }
 }

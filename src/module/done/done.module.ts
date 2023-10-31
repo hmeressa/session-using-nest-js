@@ -7,6 +7,7 @@ import {
   TaskModel,
   TaskStatusModel,
   TodoModel,
+  UserModel,
 } from '../../model';
 import {
   DoneService,
@@ -14,6 +15,7 @@ import {
   TaskService,
   TaskStatusService,
   TodoService,
+  UserService,
 } from '../../service';
 import { DoneRepository, InProgressRepository } from '../../repository';
 
@@ -26,6 +28,7 @@ import { DoneRepository, InProgressRepository } from '../../repository';
       InProgressModel,
       TodoModel,
       InProgressModel,
+      UserModel,
     ]),
   ],
   controllers: [DoneController],
@@ -38,6 +41,7 @@ import { DoneRepository, InProgressRepository } from '../../repository';
     TodoService,
     InProgressService,
     InProgressRepository,
+    UserService,
   ],
 })
 export class DoneModule {}

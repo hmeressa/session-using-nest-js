@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Delete, Injectable } from '@nestjs/common';
 import { InProgressInterface } from '../../interface';
 import { InProgressModel, TaskModel } from '../../model';
 import { InProgressRepository, TaskRepository } from '../../repository';
@@ -26,13 +26,17 @@ export class InProgressService implements InProgressInterface {
         endDate: todo.endDate,
         todoId: todo.id,
       });
+      console.log(todo);
 
       await this.taskRepository.update(taskId, {
         taskStatusId: taskStatus.id,
       });
+
       const inP = await this.inProgressModelRepository.save(inProgress);
-      console.log('log', todo.id);
-      await this.todoService.deleteTodo(todo.id);
+      console.log(inP);
+      const { id, ...todos } = todo;
+      console.log(todos);
+
       return inP;
     } catch (error) {
       throw error;

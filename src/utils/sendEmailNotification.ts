@@ -9,8 +9,7 @@ export const sendEmailNotification = async (
 ): Promise<boolean> => {
   const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
-    port: 587,
-    secure: false, // secure should be false because port is 587
+    port: 465,
     auth: {
       user: 'hmkashay@gmail.com',
       pass: 'ylzsrnlbwmzgeohn',
