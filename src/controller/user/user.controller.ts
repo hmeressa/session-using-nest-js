@@ -54,8 +54,8 @@ export class UserController {
   }
 
   @Get()
-  @UseGuards(RolePermissionsGuard)
-  @Permissions('view-users')
+  // @UseGuards(RolePermissionsGuard)
+  // @Permissions('view-users')
   async getUsers(): Promise<Object> {
     return this.userService.getUsers();
   }

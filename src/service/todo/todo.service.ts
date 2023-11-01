@@ -38,6 +38,12 @@ export class TodoService implements TodoInterface {
     });
   }
 
+  async getTaskIdFromTodo(taskId: string): Promise<any> {
+    return await this.todoRepository.findOne({
+      where: { taskId: taskId },
+    });
+  }
+
   async getTodos(): Promise<any> {
     return this.todoRepository.find();
   }

@@ -15,24 +15,24 @@ import { UserService } from './service';
 import { UserModel } from './model';
 @Module({
   imports: [
-    // TypeOrmModule.forRoot({
-    //   type: 'postgres',
-    //   host: 'localhost',
-    //   username: 'postgres',
-    //   password: '12345678',
-    //   database: 'nest-js-learning-session',
-    //   entities: [__dirname + '/**/*.model{.ts,.js}'],
-    //   synchronize: true,
-    // }),
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: process.env.host,
-      username: process.env.username,
-      password: process.env.password,
-      database: process.env.database,
+      host: 'localhost',
+      username: 'postgres',
+      password: '12345678',
+      database: 'nest-js-learning-session',
       entities: [__dirname + '/**/*.model{.ts,.js}'],
       synchronize: true,
     }),
+    // TypeOrmModule.forRoot({
+    //   type: 'postgres',
+    //   host: process.env.host,
+    //   username: process.env.username,
+    //   password: process.env.password,
+    //   database: process.env.database,
+    //   entities: [__dirname + '/**/*.model{.ts,.js}'],
+    //   synchronize: true,
+    // }),
     TypeOrmModule.forFeature([UserModel]),
     AllModules,
   ],
@@ -51,10 +51,10 @@ export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(UserAuthorization)
-      .exclude('auth', 'project', {
-        path: 'user',
-        method: RequestMethod.POST,
-      })
+      // .exclude('auth', 'project', {
+      //   path: 'user',
+      //   method: RequestMethod.POST,
+      // })
       .forRoutes
       // 'user',
       // 'role',

@@ -50,7 +50,7 @@ export class TodoController {
     );
     return {
       status: 'Success',
-      data: todo,
+      data: task,
     };
   }
 

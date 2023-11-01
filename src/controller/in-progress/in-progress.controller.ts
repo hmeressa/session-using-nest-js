@@ -5,20 +5,22 @@ import {
   Param,
   Post,
 } from '@nestjs/common';
-import { InProgressService, TodoService } from '../../service';
+import { InProgressService, TaskService, TodoService } from '../../service';
 
 @Controller('in-progress')
 export class InProgressController {
   constructor(
     private readonly inProgressService: InProgressService,
     private readonly todoService: TodoService,
+    private readonly taskService: TaskService,
   ) {}
 
   @Post(':id')
   async transferTodoTaskToInProgressTasks(
     @Param('id') id: string,
   ): Promise<any> {
-    const todo = await this.todoService.getTodo(id);
+    const todo = await this.todoService.getTaskIdFromTodo(id);
+    console.log('task id', todo.id);
     const { taskId, ...todos } = todo;
     if (!todos) {
       return new NotFoundException({
@@ -40,9 +42,10 @@ export class InProgressController {
     }
     return {
       status: 'Success',
-      data: inProgress,
+      data: await this.taskService.getTask(todo.taskId),
     };
   }
+
   @Get(':id')
   async getInProgress(id: string): Promise<any> {
     const inProgress = await this.inProgressService.getInProgress(id);

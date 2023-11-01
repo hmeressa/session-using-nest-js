@@ -10,6 +10,7 @@ import {
 import {
   DoneService,
   InProgressService,
+  TaskService,
   TodoService,
   UserService,
 } from '../../service';
@@ -23,6 +24,7 @@ export class DoneController {
     private readonly TodoService: TodoService,
     private readonly inProgressService: InProgressService,
     private readonly UserService: UserService,
+    private readonly taskService: TaskService,
   ) {}
 
   @Post(':id')
@@ -30,10 +32,11 @@ export class DoneController {
     @Param('id') id: string,
     @Req() request: Request,
   ): Promise<any> {
+    const todo = await this.TodoService.getTaskIdFromTodo(id);
+    const inProgress =
+      await this.inProgressService.getInProgressIdFromInprogress(todo.id);
     const users = await this.UserService.getUsers();
     const admins = users.filter((admin: any) => admin.role.name === 'Admin');
-    const inProgress = await this.inProgressService.getInProgress(id);
-    const todo = await this.TodoService.getTodo(inProgress.todoId);
     if (!inProgress) {
       return new NotFoundException({
         message: 'Something bad happened',
@@ -49,16 +52,16 @@ export class DoneController {
       });
     }
 
-    await sendEmailNotification(
-      (request.body as any).id,
-      (users as any).email.email,
-      'Task Notification',
-      'You are assigned a task',
-      '',
-    );
+    // await sendEmailNotification(
+    //   (request.body as any).id,
+    //   (users as any).email.email,
+    //   'Task Notification',
+    //   'You are assigned a task',
+    //   '',
+    // );
     return {
       status: 'Success',
-      data: done,
+      data: await this.taskService.getTask(todo.taskId),
     };
   }
 
