@@ -20,7 +20,7 @@ export class TaskService implements TaskInterface {
   async getTask(id: string): Promise<any> {
     return await this.taskRepository.findOne({
       where: { id: id },
-      relations: ['project'],
+      relations: ['project', 'user'],
     });
   }
 

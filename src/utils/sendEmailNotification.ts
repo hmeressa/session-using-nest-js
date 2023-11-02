@@ -1,35 +1,35 @@
 import * as nodemailer from 'nodemailer';
 
 export const sendEmailNotification = async (
-  from: string,
-  to: string,
-  subject: string,
-  body: string,
-  cc: string,
-): Promise<boolean> => {
-  const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 465,
+  from: any,
+  to: any,
+  subject: any,
+  body: any,
+  cc: any,
+): Promise<any> => {
+  var mailOptions = {
+    from: from,
+    to: to,
+    subject: subject,
+    text: body,
+    cc,
+  };
+
+  var transporter = nodemailer.createTransport({
+    service: 'gmail',
     auth: {
-      user: 'hmkashay@gmail.com',
+      user: 'hmkahsay@gmail.com',
       pass: 'ylzsrnlbwmzgeohn',
     },
   });
 
-  const mailOptions = {
-    from: from,
-    to: to,
-    cc: cc,
-    subject: subject,
-    text: body,
-  };
-
-  try {
-    await transporter.sendMail(mailOptions);
-    console.log('Email notification sent');
-    return true;
-  } catch (error) {
-    console.error('Error sending email notification:', error);
-    return false;
-  }
+  await transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+      return false;
+    } else {
+      console.log('Email notiicatio is sent to admin: ' + info.response);
+      return true;
+    }
+  });
 };
