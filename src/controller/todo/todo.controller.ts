@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { Request } from 'express'; // Import Request from 'express'
 import { TaskService, TodoService, UserService } from '../../service';
-import { sendEmailNotification } from 'src/utils/sendEmailNotification';
+import { sendEmailNotification } from '../../utils/sendEmailNotification';
 
 @Controller('todo')
 export class TodoController {
@@ -42,6 +42,7 @@ export class TodoController {
         error: 'Unable to create todo',
       });
     }
+    console.log('user', (request.body as any).email);
     await sendEmailNotification(
       (request.body as any).id,
       (user as any).email.email,
