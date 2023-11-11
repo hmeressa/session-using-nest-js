@@ -8,6 +8,7 @@ import {
   Post,
   Req,
 } from '@nestjs/common';
+import { Request } from 'express'; // Import Request from 'express'
 import { TaskService, TodoService, UserService } from '../../service';
 import { sendEmailNotification } from 'src/utils/sendEmailNotification';
 
