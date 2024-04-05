@@ -15,24 +15,24 @@ import { UserService } from './service';
 import { UserModel } from './model';
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      username: 'postgres',
-      password: 'postgres',
-      database: 'task',
-      entities: [__dirname + '/**/*.model{.ts,.js}'],
-      synchronize: true,
-    }),
     // TypeOrmModule.forRoot({
     //   type: 'postgres',
-    //   host: process.env.host,
-    //   username: process.env.username,
-    //   password: process.env.password,
-    //   database: process.env.database,
+    //   host: 'localhost',
+    //   username: 'postgres',
+    //   password: 'postgres',
+    //   database: 'task',
     //   entities: [__dirname + '/**/*.model{.ts,.js}'],
     //   synchronize: true,
     // }),
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: process.env.host,
+      username: process.env.username,
+      password: process.env.password,
+      database: process.env.database,
+      entities: [__dirname + '/**/*.model{.ts,.js}'],
+      synchronize: true,
+    }),
     TypeOrmModule.forFeature([UserModel]),
     AllModules,
   ],
